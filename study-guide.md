@@ -15,7 +15,7 @@ Outline taken from [Red Hat's study points](https://www.redhat.com/en/services/t
 ## Manage users and policies
 - Configure the HTPasswd identity provider for authentication
   Create an htpasswd file<br>
-      htpasswd -c -B -b $filename $user $password
+      `htpasswd -c -B -b $filename $user $password`
 
 - Create and delete users
 - Modify user passwords
