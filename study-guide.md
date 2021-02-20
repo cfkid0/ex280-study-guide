@@ -19,8 +19,8 @@ oc delete project $project-name
 ### - Use product documentation
 
 ## Manage users and policies
-### - Configure the HTPasswd identity provider for authentication\s\s
-Create an htpasswd file\s\s
+### - Configure the HTPasswd identity provider for authentication
+Create an htpasswd file
 `htpasswd -c -B -b $filename $user $password`
 
 ### - Create and delete users
