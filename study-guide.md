@@ -8,23 +8,60 @@ Outline taken from [Red Hat's study points](https://www.redhat.com/en/services/t
 ```
 oc new-project $project-name
 oc delete project $project-name
+oc new-app $app-name
+oc delete deployment/$app-name
 ```
+
 ### - Import, export, and configure Kubernetes resources
 ### - Examine resources and cluster status
+```
+oc get nodes
+oc adm top nodes
+oc describe node $node-name
+oc get clusterversion
+oc desribe clusterversion
+oc get clusteroperators
+```
+
 ### - View logs
 `oc logs $pod-name (-n namespace)`
 
 ### - Monitor cluster events and alerts
 ### - Troubleshoot common cluster events and alerts
+```
+
+oc adm node-logs -u $user $node-name
+oc debug node/$node-name
+oc rsh $pod-name
+oc cp $filename $pod-name:/$path
+```
+
 ### - Use product documentation
 
 ## Manage users and policies
 ### - Configure the HTPasswd identity provider for authentication
-Create an htpasswd file<br>
+Create an htpasswd file/user<br>
 `htpasswd -c -B -b $filename $user $password`
+**Note:** -c creates a new file.  Only needed for first user
+
+Delete a user from htpasswd file
+`htpasswd -D $filename $username`
+
+Extract secret information
+`oc extract secret/$secret-name -n $namespace --to $path --confirm`
 
 ### - Create and delete users
+Create the secret
+`oc create secret generic $secret-name --from-file htpasswd=$filename --dry-run -o yaml -n openshift-config | oc replace -f -`
+** Note:** this command creates the secret and replaces the oauth in OpenShift all in one command.
+
 ### - Modify user passwords
+Update htpasswd secret
+`oc set data secret/$secret-name --from-file htpasswd=$filename -n openshift-config`
+
+Delete the user from OpenShift
+`oc delete identity $secret:$username`
+
 ### - Modify user and group permissions
 ### - Create and manage groups
 
